@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* app container */
+
+main#app {
+    margin: 20px auto;
+    width: 90%;
+}
+
+
+/* 1st part: header with seacrh bar */
+
+#header {
+    display: flex;
+    border-bottom: 1px solid darkgrey;
+    padding-bottom: 20px;
+}
+
+#header * {
+    height: 35px;
+}
+
+#header div:first-child {
+    display: flex;
+    align-items: center;
+    height: 55px;
+    width: 40%;
+}
+
+h1 {
+    margin-left: 50px;
+}
+
+#header div:last-child {
+    display: flex;
+    width: 60%;
+    height: 55px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+#search-bar {
+    width: 100%;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    font-size: 16px;
+}
+
+/* 2nd part: everything below the header */
+
+/* main container */
+div#container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    padding-top: 30px;
+}
+
+
+/* left side */
+
+#options {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+#options-list {
+    list-style: none;
+}
+
+#options-list li {
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 22px; /* Tamaño del icono SVG */
+  padding-top: 10px;
+  padding-left: 35px; /* Espacio entre el icono y el texto */
+  margin-bottom: 20px; /* Espacio entre elementos */
+  min-height: 35px; /* Asegura espacio para el icono */
+}
+
+#item-1 {
+  background-image: url('./images/svg/light-bulb.svg');
+}
+
+#item-2 {
+  background-image: url('./images/svg/pencil.svg');
+}
+
+#item-3 {
+  background-image: url('./images/svg/bin.svg');
+}
+
+/* right side */
+
+div#working-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#new-note {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    align-self: center;
+}
+
+#new-note > * {
+    padding: 10px;
+    width: 350px;
+    outline: none;
+    overflow: hidden;
+    resize: none;
+    font-size: 16px;
+    border: 1px solid gray;
+}
+
+#title {
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+}
+#content {
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    field-sizing: content;
+}
+
+.grid {
+  position: relative;
+  width: 100%;
+}
+
+.grid::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.item {
+    position: absolute;
+    width: 280px;
+    margin: 10px;
+}
+
+.item-content {
+    padding: 10px;
+    border-radius: 12px;
+    width:100%;
+    box-sizing: border-box;
+}
