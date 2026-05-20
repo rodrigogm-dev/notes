@@ -30,8 +30,19 @@
                 <form id="new-note">
                     <textarea id="title" placeholder="Título"></textarea>
                     <textarea id="content" placeholder="Crear una nota..."></textarea>
+                    <button id="delete-data">Del Data</button>
                 </form>
                 <section class="grid"></section>
+            </div>
+        </div>
+        <div id="modal">
+            <div class="modal-content">
+                <h2>Borrar todas las Notas?</h2>
+                <p>Esta acción eliminará todas las notas.</p>
+                <div id="modal-buttons-wrapper">
+                    <button type="button" id="ok-delete-data" class="modal-btn">Sí</button>
+                    <button type="button" id="no-delete-data" class="modal-btn">No</button>
+                </div>
             </div>
         </div>
     </main>

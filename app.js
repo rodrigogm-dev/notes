@@ -2,8 +2,9 @@ const newNoteTitle = document.querySelector("#title")
 const newNoteContent = document.querySelector("#content")
 const allNotes = document.querySelector("#all-notes")
 const burgerIcon = document.querySelector("#burger-icon")
-const form = document.querySelector("#new-note");
+const form = document.querySelector("#new-note")
 const liElements = document.querySelectorAll(".li-elements")
+const deleteDataBtn = document.querySelector("#delete-data")
 
 let liElementsText = []
 let notes = []
@@ -22,8 +23,36 @@ const observer = new ResizeObserver(() => {
   grid.refreshItems().layout()
 })
 
-burgerIcon.addEventListener("click", toggleLiElementsText)
-liElements.forEach(li=>li.addEventListener("click", toggleLiElementsText))
+const saveData = function() {
+    localStorage.setItem("myKey", JSON.stringify(notes))
+}
+
+const loadData = function() {
+    if(localStorage.getItem("myKey") !== null) {
+        notes = JSON.parse(localStorage.getItem("myKey"))
+    }
+}
+
+const deleteData = function(event) {
+    event.preventDefault()
+
+    const modal = document.querySelector("#modal")
+    modal.style.display = "flex"
+
+    const okBtn = document.querySelector("#ok-delete-data")
+    const noBtn = document.querySelector("#no-delete-data")
+       
+    okBtn.onclick = () => {
+        notes = []
+        saveData()
+        modal.style.display = "none"
+        render()
+    }
+
+    noBtn.onclick = () => {
+        modal.style.display = "none"
+    }
+}
 
 function toggleLiElementsText() {
     liElements.forEach((li, index)=>{
@@ -47,28 +76,22 @@ function toggleLiElementsText() {
 
 const addNote = (event) => {
     if (!form.contains(event.relatedTarget)) {
-        const title = document.querySelector("#title")
-        const content = document.querySelector("#content")
-
-        const titleValue = title.value.trim()
-        const contentValue = content.value.trim()
+        const titleValue = newNoteTitle.value.trim()
+        const contentValue = newNoteContent.value.trim()
 
         if (titleValue !== "" || contentValue !== "") {
             const id = notes.length
             const note = { id:id ,title: titleValue, content: contentValue }
             notes.push(note)
             render()
+            saveData()
             title.value = ""
             content.value = ""
         }
     }
 }
 
-form.addEventListener("focusout", addNote);
-
-
 function render() {
-
     const container = document.querySelector(".grid")
 
     if (grid) {
@@ -141,10 +164,22 @@ const resizeTextarea = function() {
     this.style.fieldSizing = "content"
 }
 
-newNoteTitle.addEventListener("input", resizeTextarea)
-newNoteContent.addEventListener("input", resizeTextarea)
-
 const editNote = function(event) {
     const noteId = event.target.closest('div.item').dataset.id;
+    // const note = notes.find(n => n.id === noteId)
     this.classList.contains("title")? notes[noteId].title = this.value : notes[noteId].content = this.value
+    saveData()
 }
+
+function init() {
+    loadData()
+    render()
+    deleteDataBtn.addEventListener("click", deleteData)
+    burgerIcon.addEventListener("click", toggleLiElementsText)
+    liElements.forEach(li=>li.addEventListener("click", toggleLiElementsText))
+    form.addEventListener("focusout", addNote)
+    newNoteTitle.addEventListener("input", resizeTextarea)
+    newNoteContent.addEventListener("input", resizeTextarea)
+}
+
+init()
